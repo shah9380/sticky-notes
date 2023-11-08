@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Your existing CSS styles here */
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.container{
+    height: 100vh;
+}
+.texting-area{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(235, 235, 235);
+    height: 40%;
+    gap: 1%;
+}
+.add{
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: auto;
+}
+#add-color{
+    width: 100%;
+    height: 15%;
+}
+#add-note{
+    height: 15%;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(57,67,86);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+#input-text{
+    font-size: 16px;
+    box-shadow: 2px 2px 4px black;
+}
+#notes-area{
+    display: flex;
+    justify-content: center;
+    gap: 1%;
+    row-gap: 2vh;
+    flex-wrap: wrap;
+}
+.Btn{
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 1px 1px 4px red;
+}
+.Btn:hover{
+    transform: scale(1.05);
+    font-weight: 600;
+}
+        /* Add the hanging card animation */
+        #notes-area .mainDiv {
+            position: relative;
+            background-color: color_value;
+            width: 200px;
+            height: 25vh;
+            box-shadow: 2px 2px 10px black;
+            overflow: hidden;
+            border-top-right-radius: 6px;
+            animation: hang 0.5s ease-in-out;
+        }
+
+        @keyframes hang {
+            0% {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="texting-area">
+            <textarea name="texting" id="input-text" cols="60" rows="6" maxlength="160" placeholder="// Write a note here"></textarea>
+            <div class="add">
+                <input type="color" id="add-color">
+                <button id="add-note">Add note</button>
+            </div>
+        </div>
+        <div id="notes-area">
+        </div>
+    </div>
+    <script>
+        const input_text = document.getElementById('input-text');
+        const input_color = document.getElementById('add-color');
+        const addNoteBtn = document.getElementById('add-note');
+        const notes_area = document.getElementById('notes-area');
+
+        addNoteBtn.addEventListener('click', () => {
+            const text_value = input_text.value;
+            const color_value = input_color.value;
+            if (text_value !== '') {
+                let mainDiv = document.createElement('div');
+                mainDiv.className = 'mainDiv'; // Add the "mainDiv" class
+                let closeBtn = document.createElement('div');
+                let Btn = document.createElement('span');
+                Btn.innerHTML = "X";
+                closeBtn.append(Btn);
+                Btn.addEventListener('click', () => {
+                    mainDiv.remove(); // Remove the mainDiv when the close button is clicked
+                });
+                Btn.className = "Btn";
+                Btn.style.backgroundColor = "red";
+                Btn.style.cursor = "pointer";
+                Btn.style.padding = "4px 6px";
+                closeBtn.style.position = "relative";
+                closeBtn.style.display = "flex";
+                closeBtn.style.width = "200px";
+                closeBtn.style.justifyContent = "flex-end";
+                closeBtn.style.zIndex = "1";
+                let newDiv = document.createElement('div');
+                newDiv.innerHTML = `<p>${text_value}<p>`;
+                mainDiv.append(closeBtn, newDiv);
+                darkColors.forEach(element => {
+                    if (color_value === element) {
+                        newDiv.style.color = "rgb(235, 235, 235)";
+                    }
+                });
+                newDiv.style.position = "relative";
+                newDiv.style.overflow = "auto";
+                mainDiv.style.backgroundColor = color_value;
+                mainDiv.style.width = "200px";
+                mainDiv.style.height = "25vh";
+                mainDiv.style.boxShadow = "2px 2px 10px black";
+                mainDiv.style.overflow = "hidden";
+                mainDiv.style.borderTopRightRadius = "6px";
+                notes_area.append(mainDiv);
+            }
+        });
+
+        // Define your darkColors array here
+        const darkColors = [
+            "#000000", // Black
+            "#333333", // Dark Gray
+            "#444444", // Charcoal
+            "#1E1E1E", // Very Dark Gray
+            "#2C3E50", // Midnight Blue
+            "#34495E", // Wet Asphalt
+            "#7D6608", // Olive Drab
+            "#8B4513", // Saddle Brown
+            "#9932CC", // Dark Orchid
+            "#8B0000", // Dark Red
+        ];
+    </script>
+</body>
+</html>
+
+
+
+
